@@ -1,0 +1,141 @@
+﻿
+.showLoading {
+    display: block;
+}
+.hideLoading {
+    display: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+/*    overflow-x:hidden;
+    overflow-y:hidden;*/
+}
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+
+header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #333;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+}
+
+.container {
+    max-width: 100%;
+}
+
+main {
+    padding: 20px;
+}
+
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col {
+    flex: 1;
+}
+
+#newsContainer {
+    padding: 20px;
+    height: calc(78vh ); /* Adjusted for header and footer */
+}
+
+.news-item {
+    margin-bottom: 10px;
+}
+
+.news-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+}
+
+    .news-link:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+
+#newItemContainer {
+    background-color: ghostwhite;
+    padding: 20px;
+    height: calc(78vh); /* Adjusted for header and footer */
+}
+
+#newItemTitle {
+    font-size: 24px;
+    margin-bottom: 14px;
+    margin-top: 14px;
+}
+
+#newItemDate {
+    font-size: 16px;
+    color: #333;
+    font-weight:300;
+}
+
+#newItemBody {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+#link {
+    margin-top: 10px;
+    text-align: end;
+    padding: 20px;
+    font-weight:bold;
+}
+
+footer {
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    color: #333;
+}
+
+#sidebar {
+    height: 100%;
+    width: 600px;
+    top: 56px; /* Adjust the top position to start after the header */
+    left: 0;
+    background-color: #4E4F5A;
+    padding-top: 20px;
+    padding-left: 10px;
+    color: white;
+    overflow-y: auto; /* Make the sidebar scrollable */
+}
+    #sidebar a {
+        padding: 8px 16px;
+        text-decoration: none;
+        font-size: 14px;
+        color: white;
+        display: block;
+    }
+
+        #sidebar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
