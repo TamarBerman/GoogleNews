@@ -7,11 +7,13 @@ namespace DAL_
     public class NewsService
     {
         // API link
+        
         private const string RssFeedUrl = "http://news.google.com/news?pz=1&cf=all&ned=en_il&hl=en&output=rss";
 
+        // HttpCache | Dependecy Injection of IMemoryCache .Net Core Service
+        private readonly IMemoryCache _cache;
         private const string CacheKey = "GoogleNewsFeed";
 
-        private readonly IMemoryCache _cache;
 
 
 
@@ -31,7 +33,6 @@ namespace DAL_
         public async Task<IEnumerable<NewsItem>?> GetNewsAsync()
         {
             // several users accessing our service which means there could be multiple requests accessing our in-memory cache. One way to make sure that no two different users get different results is by utilising .Net locks
-            // sahansera.dev/in-memory-caching-aspcore-dotnet/
             var semaphore = new SemaphoreSlim(1, 1);
 
             // Try to get news from cache
@@ -43,7 +44,7 @@ namespace DAL_
             // If news doesn't exists in cache
             try
             {
-
+                // Lock
                 await semaphore.WaitAsync();
 
                 // Recheck to make sure it didn't populate before entering semaphore
@@ -53,15 +54,15 @@ namespace DAL_
                     return cachedNews;
                 }
 
-                Console.WriteLine("products NOT found in cache. loading them...");
                 // Fetch news
+                Console.WriteLine("products NOT found in cache. loading them...");
                 cachedNews = await this.fetchNews();
+
                 return cachedNews;
             }
             catch (Exception ex)
             {
-                // Handle exception 
-                Console.WriteLine($"Error fetching news: {ex.Message}");
+\                Console.WriteLine($"Error fetching news: {ex.Message}");
                 return null;
             }
             finally
@@ -79,12 +80,16 @@ namespace DAL_
         /// <returns></returns>
         public async Task<IEnumerable<NewsItem>> fetchNews()
         {
+
             using (var httpClient = new HttpClient())
             {
+                // gets the data fron RSS API as Strin 
                 var rssData = await httpClient.GetStringAsync(RssFeedUrl);
 
+                // Parse to XML
                 var xmlDoc = XDocument.Parse(rssData);
 
+                // Read XML and convert to NewsItem Objects list
                 var newsList = new List<NewsItem>();
                 foreach (var item in xmlDoc.Descendants("item"))
                 {
@@ -101,7 +106,10 @@ namespace DAL_
                 }
 
                 // Cache the news
-
+                // set expiration policies, priority, callbacks
+                // the cache entry will expire if it's not accessed within 45 Min
+                // the cache entry will expire after 1 hour, regardless of whether it's accessed or not 
+                // cache eviction policy - normal priority.
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
                     .SetSlidingExpiration(TimeSpan.FromSeconds(45))
                     .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
@@ -117,6 +125,12 @@ namespace DAL_
 
         }
 
+        /// <summary>
+        /// retrieves one new -  calls the GetNewsAsync function, get the newList (cache /api)
+        /// and find the one with the id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<NewsItem?> GetNewsByIdAsync(string id)
         {
             try
@@ -125,14 +139,12 @@ namespace DAL_
                 var allNews = await GetNewsAsync();
 
                 // Find the news item with the specified id
-
                 var newsItem = allNews?.FirstOrDefault(item => item.Id == id);
 
                 return newsItem;
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it as needed
                 Console.WriteLine($"Error fetching news by ID: {ex.Message}");
                 return null;
             }

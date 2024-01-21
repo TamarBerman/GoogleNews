@@ -10,16 +10,21 @@ namespace GoogleNews.Controllers
     [ApiController]
     public class GoogleNewsController : ControllerBase
     {
-        private readonly IMemoryCache _cache;
-        private const string CacheKey = "GoogleNewsFeed";
+        // Dependency Injection - inject the NewsService from the DAL layer
         private readonly DAL_.NewsService _newsService;
 
-        public GoogleNewsController(DAL_.NewsService newsService, IMemoryCache memoryCache)
+        // Ctor - DI
+        public GoogleNewsController(DAL_.NewsService newsService )
         {
-            _cache = memoryCache;
             _newsService = newsService;
         }
 
+
+        /// <summary>
+        /// Retrieves the news from the RSS external API. 
+        /// returns Task<IActionResult> - for async data
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> GetNews()
@@ -36,6 +41,13 @@ namespace GoogleNews.Controllers
 
         }
 
+        /// <summary>
+        /// Retrieves one specific new-item from the RSS external API ( or from HttpCache). 
+        /// according to the new-item id (guid)
+        /// returns Task<IActionResult> - for async data
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("[action]/{id}")]
         public async Task<IActionResult> GetNewsItem(string id)

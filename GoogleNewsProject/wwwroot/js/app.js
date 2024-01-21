@@ -1,6 +1,12 @@
-﻿$(document).ready(function () {
+﻿// Start after the wole DOM is rendereed
+$(document).ready(function () {
+
+    // Fetching the loadingSpinner div from the DOM
     const loadingSpinner = $("#loadingSpinner");
 
+    // Display one New - Item
+    // get the id of the specific item and sends it in the AJAX call
+    // on success- displayes the data that was retrieved in the DOM elements
     const displayPost = (id) => {
         $.ajax({
             type: "GET",
@@ -12,6 +18,7 @@
                 $('#newItemTitle').text(data.title);
                 $('#newItemDate').text((data.date));
                 $('#newItemBody').html(data.body);
+                // adds a Link (<a>) element to the DOM with target="_blank" to open in a new tab
                 var newsLink = '<a id="readMoreLink" href="' + data.link + '" target="_blank">Read More -></a>';
                 $('#link').empty();
                 $('#link').append(newsLink);
@@ -21,12 +28,15 @@
             }
         });
     }
-
+    // gets the news list, and displays it in the newsContainer element, attaching clieck event for each on 
     const displayNews = (news) => {
-        var newsContainer = $("#newsContainer");
-        
-        newsContainer.empty(); // Clear existing content
 
+        var newsContainer = $("#newsContainer");
+        // Clear existing content, in order to avoid duplicate content
+        newsContainer.empty();
+
+        // Action parallel to Repeater Control
+        // Going through the array and for each item - diaplays it in the same pattern
         if (news && news.length > 0) {
             var newsList = '<div id="sidebar" >';
             $.each(news, function (index, item) {
@@ -34,10 +44,11 @@
                 newsItemHtml += '<a href="#" class="news-link">' + item.title + '</a>';
                 newsItemHtml += '</div>';
 
-                // Append the news item to the container
+                // Append the news item to the newsList
                 newsList += newsItemHtml;
             });
             newsList += '</div>';
+            // Append the newsList item to the newsContainer
             newsContainer.append(newsList);
 
             // Attach click event using event delegation
@@ -48,9 +59,10 @@
             // Display a message when there are no news items
             newsContainer.html('<p>No news available.</p>');
         }
-        
+
     }
 
+    // Fetches the news list from AJAX API call
     const getNews = () => {
 
         // Show loading spinner while fetching data
@@ -79,10 +91,11 @@
     // Fetch news on page load
     getNews();
 
-
-
 });
 
+// AJAX Call to clear the HttpCache
+// Called when clicking a button
+// A corresponding will be displayed according to success / error
 const clearCache = () => {
     $.ajax({
         type: "POST",
@@ -98,10 +111,11 @@ const clearCache = () => {
     });
 }
 
+// when clicking privacy in the navbar - navigates privicy page. "privacy.html" will be displayed
 const privacy = () => {
     location.href = "privacy.html";
 }
-
+// when clicking privacy in the navbar - navigates manager page. "manage.html" will be displayed
 const manage = () => {
     location.href = "manage.html";
 }
