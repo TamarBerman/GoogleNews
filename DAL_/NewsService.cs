@@ -62,7 +62,7 @@ namespace DAL_
             }
             catch (Exception ex)
             {
-\                Console.WriteLine($"Error fetching news: {ex.Message}");
+               Console.WriteLine($"Error fetching news: {ex.Message}");
                 return null;
             }
             finally
