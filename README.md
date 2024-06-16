@@ -33,7 +33,7 @@ This web application displays topics from Google News RSS feeds. By clicking on 
 
 Clone the repository:
 ```
-git clone <repo-url>
+git clone https://github.com/TamarBerman/GoogleNews.git
 ```
 Install dependencies:
 ```
