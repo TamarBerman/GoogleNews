@@ -47,21 +47,16 @@ Run the application:
 ```
 dotnet run
 ```
-Running the App
 
-Navigate to http://localhost:5000 to view the application.
-
-Screenshots
-* Home Page: Displays news topics on the left, with detailed post information on the right.
-* Admin Page: Allows for cache management and demonstrates loading times.
+> Navigate to http://localhost:5000 to view the application.
 
 ## Code Quality
 The code is written with a focus on efficiency, clean coding practices, and thorough error handling. Key features include:
 
-* API Integration: External API calls to Google News RSS.
-* XML Parsing: Efficient handling and parsing of XML data.
-* HTTP Caching: Improved performance through data caching.
-* Thread Safety: Ensures consistent data with semaphore locking.
+* **API Integration:** External API calls to Google News RSS.
+* **XML Parsing:** Efficient handling and parsing of XML data.
+* **HTTP Caching:** Improved performance through data caching.
+* **Thread Safety:** Ensures consistent data with semaphore locking.
 
 ## Conclusion
 This project showcases a professional approach to developing a web application with real-time data updates and efficient backend management. It leverages modern web technologies and best practices to deliver a high-quality user experience.
@@ -70,3 +65,5 @@ This project showcases a professional approach to developing a web application w
 - [Project Code on GitHub](https://github.com/TamarBerman/GoogleNews)
 
 - [Demo Video](https://drive.google.com/file/d/1XuR02W80CvUcZVjhKoDITulfFGPULayA/view)
+
+<h3 align="center">* * *</h3>
